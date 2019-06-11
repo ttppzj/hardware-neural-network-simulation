@@ -1,3 +1,4 @@
+#this code is to simulate neuromorphic network training based on memristors
 import numpy as np
 
 def sigmoid(x):
@@ -33,6 +34,7 @@ class NeuralNetwork:
         self.output     = np.zeros(self.y.shape)
 
     def feedforward(self):
+        #it is a forward propagation process
         self.layer1 = sigmoid(np.dot(self.weights1,self.input))
         self.output = sigmoid(np.dot(self.weights2,self.layer1))
 
@@ -45,7 +47,7 @@ class NeuralNetwork:
         self.weights1 += d_weights1
         self.weights2 += d_weights2
     def matrixtune1(self):
-        #automaticly tune each compont of matrix with a small shift to compare if output make costfunction smaller
+        #automaticly tune each compont of weights1 matrix with a small shift to compare if output make costfunction smaller
         [rows, cols] = self.weights1.shape
         for i in range(rows):
             for j in range(cols):
@@ -58,7 +60,7 @@ class NeuralNetwork:
                 else:
                     self.weights1[i,j]=self.weights1[i,j]
     def matrixtune2(self): 
-        #automaticly tune each compont of matrix with a small shift to compare if output make costfunction smaller
+        #automaticly tune each compont of weights2 matrix with a small shift to compare if output make costfunction smaller
         [rows, cols] = self.weights2.shape
         for i in range(rows):
             for j in range(cols):
@@ -72,6 +74,7 @@ class NeuralNetwork:
                     self.weights2[i,j]=temp1-2*delta
                     
 
+#X is the traing data and y is the label
 if __name__ == "__main__":
     X = np.array([[0,0,1,
                   0,1,1,
